@@ -40,8 +40,8 @@ namespace SmallSurvivalGame.scripts.map.generation
 
         private TileType GetTileTypeByValue(double value)
         {
-            TileType returnValue;
-
+            TileType returnValue = TileType.Grass;
+            /*
             if (value < 0.15d)
             {
                 returnValue = TileType.Deep_Water;
@@ -70,7 +70,7 @@ namespace SmallSurvivalGame.scripts.map.generation
             {
                 returnValue = TileType.Snow;
             }
-
+            */
             return returnValue;
         }
     }

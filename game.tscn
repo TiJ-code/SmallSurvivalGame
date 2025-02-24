@@ -1,29 +1,50 @@
-[gd_scene load_steps=5 format=3 uid="uid://cic2hemd11sca"]
+[gd_scene load_steps=8 format=3 uid="uid://cic2hemd11sca"]
 
-[ext_resource type="Texture2D" uid="uid://ftkr5do7x08r" path="res://assets/SpriteAtlas.png" id="1_1q2l2"]
-[ext_resource type="Script" path="res://scripts/map/generation/WorldGenerator.cs" id="1_56fp0"]
+[ext_resource type="Texture2D" uid="uid://cohunak0lcikv" path="res://assets/GrassAtlas.png" id="1_qcruo"]
+[ext_resource type="Script" path="res://scripts/map/DualGridTileMap.cs" id="2_vs4kp"]
+[ext_resource type="Script" path="res://scripts/player/PlayerMovement.cs" id="3_3xh32"]
+[ext_resource type="Texture2D" uid="uid://cvxfvu4mwljui" path="res://assets/Player.png" id="3_rrraj"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bi2ip"]
-resource_name = "SpriteAtlas"
-texture = ExtResource("1_1q2l2")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qon2w"]
+texture = ExtResource("1_qcruo")
 0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-4:0/0 = 0
-5:0/0 = 0
-6:0/0 = 0
-7:0/0 = 0
-8:0/0 = 0
-9:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
 
-[sub_resource type="TileSet" id="TileSet_asj25"]
-sources/0 = SubResource("TileSetAtlasSource_bi2ip")
+[sub_resource type="TileSet" id="TileSet_r1yqk"]
+sources/0 = SubResource("TileSetAtlasSource_qon2w")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bu370"]
 
 [node name="Game" type="Node2D"]
 
 [node name="WorldMap" type="TileMap" parent="."]
-tile_set = SubResource("TileSet_asj25")
+tile_set = SubResource("TileSet_r1yqk")
 format = 2
 layer_0/tile_data = PackedInt32Array(196614, 65536, 0, 196613, 65536, 0, 262149, 65536, 0, 262148, 65536, 0, 327683, 65536, 0, 393218, 65536, 0, 393217, 65536, 0, 458753, 65536, 0, 458754, 65536, 0, 458755, 65536, 0, 458756, 65536, 0, 458757, 65536, 0, 458758, 65536, 0, 458759, 65536, 0, 458760, 65536, 0, 458761, 65536, 0, 458762, 65536, 0, 458763, 65536, 0, 458764, 65536, 0, 393229, 65536, 0, 393230, 65536, 0, 393231, 65536, 0, 393232, 65536, 0, 393233, 65536, 0, 393234, 65536, 0, 393235, 65536, 0, 327700, 65536, 0, 327701, 65536, 0, 327702, 65536, 0, 327703, 65536, 0, 393239, 65536, 0, 393238, 65536, 0, 393237, 65536, 0, 458772, 65536, 0, 458771, 65536, 0, 524306, 65536, 0, 524305, 65536, 0, 524304, 65536, 0, 524303, 65536, 0, 589838, 65536, 0, 589837, 65536, 0, 655373, 65536, 0, 655374, 65536, 0, 655375, 65536, 0, 655376, 65536, 0, 655377, 65536, 0, 655378, 65536, 0, 655379, 65536, 0, 655380, 65536, 0, 655381, 65536, 0, 655382, 65536, 0, 655383, 65536, 0, 655384, 65536, 0, 720921, 65536, 0, 720922, 65536, 0, 720923, 65536, 0, 786458, 65536, 0, 786457, 65536, 0, 851992, 65536, 0, 851991, 65536, 0, 917526, 65536, 0, 917525, 65536, 0, 917524, 65536, 0, 917523, 65536, 0, 917522, 65536, 0, 917521, 65536, 0, 983056, 65536, 0, 983055, 65536, 0, 983054, 65536, 0, 983053, 65536, 0, 1048588, 65536, 0, 1048589, 65536, 0, 1048590, 65536, 0, 1048591, 65536, 0, 1048592, 65536, 0, 1114129, 65536, 0, 1114130, 65536, 0, 1114131, 65536, 0, 1114132, 65536, 0, 1114133, 65536, 0, 1114134, 65536, 0, 1114135, 65536, 0, 1114136, 65536, 0, 1114137, 65536, 0, 1114138, 65536, 0, 1179675, 65536, 0, 1179676, 65536, 0, 1245213, 65536, 0, 1310749, 65536, 0, 1376284, 65536, 0, 1441819, 65536, 0, 1507354, 65536, 0, 1572889, 65536, 0, 1638424, 65536, 0, 1703960, 65536, 0, 1769497, 65536, 0, 1769498, 65536, 0, 1769499, 65536, 0, 1769500, 65536, 0, 1835037, 65536, 0, 1835038, 65536, 0, 1835039, 65536, 0, 1835040, 65536, 0, 1835041, 65536, 0, 1835042, 65536, 0, 1835043, 65536, 0, 1900580, 65536, 0, 1966115, 65536, 0, 1966114, 65536, 0, 2031649, 65536, 0, 2097184, 65536, 0, 2162720, 65536, 0, 2162721, 65536, 0, 2228258, 65536, 0, 2228259, 65536, 0)
-script = ExtResource("1_56fp0")
+script = ExtResource("2_vs4kp")
+
+[node name="DisplayLayer" type="TileMap" parent="."]
+format = 2
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+script = ExtResource("3_3xh32")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("RectangleShape2D_bu370")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+texture = ExtResource("3_rrraj")

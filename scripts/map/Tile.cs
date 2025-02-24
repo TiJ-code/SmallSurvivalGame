@@ -19,9 +19,4 @@ namespace SmallSurvivalGame.scripts.map
             return (int) tileType;
         }
     }
-
-    public enum TileType
-    {
-        Grass = 0, High_Grass = 1, Water = 2, Deep_Water = 3, Rock = 4, Stone = 5, Snow = 6, Path = 7
-    }
 }
