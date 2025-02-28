@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://cic2hemd11sca"]
+[gd_scene load_steps=12 format=3 uid="uid://cic2hemd11sca"]
 
 [ext_resource type="Script" path="res://scripts/player/PlayerMovement.cs" id="3_3xh32"]
 [ext_resource type="TileSet" uid="uid://ca0hpg7ns00m2" path="res://assets/ResourceAtlas.tres" id="3_5p2r2"]
@@ -47,15 +47,18 @@ noiseTexture2D = SubResource("NoiseTexture2D_5pwlf")
 noiseTexture = NodePath("../NoiseTexture")
 noiseFalloffMapTexture = NodePath("../FalloffNoise")
 
-[node name="World Layer" type="TileMapLayer" parent="TileMapContainer" node_paths=PackedStringArray("DisplayLayer")]
-tile_map_data = PackedByteArray("AAADAAMAAAAAAAAAAAAEAAMAAAAAAAAAAAAFAAMAAAAAAAAAAAAGAAIAAAAAAAAAAAAHAAIAAAAAAAAAAAA=")
+[node name="World Layer" type="TileMapLayer" parent="TileMapContainer" node_paths=PackedStringArray("SandDisplayLayer", "GrassDisplayLayer")]
 tile_set = SubResource("TileSet_qshoi")
 script = ExtResource("5_jdlsd")
-DisplayLayer = NodePath("../Display Layer")
+SandDisplayLayer = NodePath("../Sand Layer")
+GrassDisplayLayer = NodePath("../Grass Layer")
 
-[node name="Display Layer" type="TileMapLayer" parent="TileMapContainer"]
+[node name="Sand Layer" type="TileMapLayer" parent="TileMapContainer"]
 position = Vector2(8, 8)
-tile_map_data = PackedByteArray("AAD+//7/AAAAAAMAAAD+//3/AAAAAAMAAAD9//3/AAAAAAMAAAD9//7/AAAAAAMAAAD9//z/AAABAAIAAAD8//3/AAADAAIAAAD8//z/AAADAAEAAAD+//z/AAADAAMAAAD+//v/AAADAAIAAAD8//7/AAADAAMAAAD7//7/AAABAAIAAAD7//3/AAADAAcAAAD7//z/AAADAAYAAAD7//v/AAADAAUAAAD8//v/AAABAAYAAAD9//v/AAADAAcAAAD6//z/AAACAAUAAAD6//v/AAACAAUAAAD6//r/AAACAAUAAAD7//r/AAACAAUAAAD8//r/AAACAAUAAAD5//z/AAACAAUAAAD5//v/AAACAAUAAAD5//r/AAACAAUAAAD6//3/AAABAAYAAAD5//3/AAABAAYAAAD9//r/AAADAAYAAAD+//r/AAADAAIAAAD5//7/AAABAAIAAAD6//7/AAABAAIAAAA=")
+tile_set = ExtResource("3_5p2r2")
+
+[node name="Grass Layer" type="TileMapLayer" parent="TileMapContainer"]
+position = Vector2(8, 8)
 tile_set = ExtResource("3_5p2r2")
 
 [node name="NoiseTexture" type="Sprite2D" parent="."]
