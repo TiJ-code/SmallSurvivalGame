@@ -1,8 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://cic2hemd11sca"]
+[gd_scene load_steps=12 format=4 uid="uid://cic2hemd11sca"]
 
 [ext_resource type="Script" path="res://scripts/player/PlayerMovement.cs" id="3_3xh32"]
+[ext_resource type="TileSet" uid="uid://ca0hpg7ns00m2" path="res://assets/ResourceAtlas.tres" id="3_5p2r2"]
 [ext_resource type="Script" path="res://scripts/map/ProceduralGenerator.cs" id="3_f2bbf"]
 [ext_resource type="Texture2D" uid="uid://cvxfvu4mwljui" path="res://assets/Player.png" id="3_rrraj"]
+[ext_resource type="Script" path="res://scripts/map/DualTileMapLayer.cs" id="5_jdlsd"]
 [ext_resource type="Texture2D" uid="uid://0qiglyk3w57r" path="res://assets/TilemapPlaceholders.png" id="6_7xml4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bu370"]
@@ -33,6 +35,8 @@ script = ExtResource("3_3xh32")
 shape = SubResource("RectangleShape2D_bu370")
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+z_index = 3
+scale = Vector2(0.25, 0.25)
 texture = ExtResource("3_rrraj")
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
@@ -43,11 +47,20 @@ noiseTexture2D = SubResource("NoiseTexture2D_5pwlf")
 noiseTexture = NodePath("../NoiseTexture")
 noiseFalloffMapTexture = NodePath("../FalloffNoise")
 
-[node name="World Layer" type="TileMapLayer" parent="TileMapContainer"]
-tile_map_data = PackedByteArray(0, 0, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+[node name="World Layer" type="TileMapLayer" parent="TileMapContainer" node_paths=PackedStringArray("DisplayLayer")]
+tile_map_data = PackedByteArray("AAADAAMAAAAAAAAAAAAEAAMAAAAAAAAAAAAFAAMAAAAAAAAAAAAGAAIAAAAAAAAAAAAHAAIAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_qshoi")
+script = ExtResource("5_jdlsd")
+DisplayLayer = NodePath("../Display Layer")
+
+[node name="Display Layer" type="TileMapLayer" parent="TileMapContainer"]
+position = Vector2(8, 8)
+tile_map_data = PackedByteArray("AAD+//7/AAAAAAMAAAD+//3/AAAAAAMAAAD9//3/AAAAAAMAAAD9//7/AAAAAAMAAAD9//z/AAABAAIAAAD8//3/AAADAAIAAAD8//z/AAADAAEAAAD+//z/AAADAAMAAAD+//v/AAADAAIAAAD8//7/AAADAAMAAAD7//7/AAABAAIAAAD7//3/AAADAAcAAAD7//z/AAADAAYAAAD7//v/AAADAAUAAAD8//v/AAABAAYAAAD9//v/AAADAAcAAAD6//z/AAACAAUAAAD6//v/AAACAAUAAAD6//r/AAACAAUAAAD7//r/AAACAAUAAAD8//r/AAACAAUAAAD5//z/AAACAAUAAAD5//v/AAACAAUAAAD5//r/AAACAAUAAAD6//3/AAABAAYAAAD5//3/AAABAAYAAAD9//r/AAADAAYAAAD+//r/AAADAAIAAAD5//7/AAABAAIAAAD6//7/AAABAAIAAAA=")
+tile_set = ExtResource("3_5p2r2")
 
 [node name="NoiseTexture" type="Sprite2D" parent="."]
+visible = false
 
 [node name="FalloffNoise" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(300, 0)

@@ -3,7 +3,7 @@ using System;
 
 public partial class PlayerMovement : CharacterBody2D
 {
-	private const float Speed = 300.0f;
+	private const float Speed = 900.0f;
 
 	public override void _PhysicsProcess(double delta)
 	{

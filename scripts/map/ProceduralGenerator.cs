@@ -8,14 +8,15 @@ public partial class ProceduralGenerator : Node2D
 	[Export] public Sprite2D noiseFalloffMapTexture;
 	private TileMapLayer tileMapLayer;
 	private Noise noise;
-	private int width = 255;
-	private int height = 255;
+	private int width = 256;
+	private int height = 256;
 	
 	public override void _Ready()
 	{
 		noise = noiseTexture2D.Noise;
 		tileMapLayer = GetNode<TileMapLayer>("World Layer");
 		GenerateWorld();
+		GetNode<DualTileMapLayer>("World Layer").GenerateDisplayLayer();
 	}
 
 	private void GenerateWorld()
