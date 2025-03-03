@@ -1,30 +1,21 @@
-[gd_scene load_steps=12 format=3 uid="uid://cic2hemd11sca"]
+[gd_scene load_steps=9 format=3 uid="uid://cic2hemd11sca"]
 
 [ext_resource type="Script" path="res://scripts/player/PlayerMovement.cs" id="3_3xh32"]
-[ext_resource type="TileSet" uid="uid://ca0hpg7ns00m2" path="res://assets/ResourceAtlas.tres" id="3_5p2r2"]
 [ext_resource type="Script" path="res://scripts/map/ProceduralGenerator.cs" id="3_f2bbf"]
 [ext_resource type="Texture2D" uid="uid://cvxfvu4mwljui" path="res://assets/Player.png" id="3_rrraj"]
-[ext_resource type="Script" path="res://scripts/map/DualTileMapLayer.cs" id="5_jdlsd"]
-[ext_resource type="Texture2D" uid="uid://0qiglyk3w57r" path="res://assets/TilemapPlaceholders.png" id="6_7xml4"]
+[ext_resource type="TileSet" uid="uid://dg35khjl1foae" path="res://assets/ResourceAtlas.tres" id="4_jxoka"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bu370"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_8gtqo"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_85xt2"]
+seed = -686559431
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5pwlf"]
-width = 255
-height = 255
-noise = SubResource("FastNoiseLite_8gtqo")
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_1o2cx"]
+seed = -175673643
+frequency = 0.0021
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fcn6f"]
-texture = ExtResource("6_7xml4")
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_qshoi"]
-sources/0 = SubResource("TileSetAtlasSource_fcn6f")
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_snuk8"]
+seed = 778520878
 
 [node name="main" type="Node2D"]
 
@@ -41,25 +32,22 @@ texture = ExtResource("3_rrraj")
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
 
-[node name="TileMapContainer" type="Node2D" parent="." node_paths=PackedStringArray("noiseTexture", "noiseFalloffMapTexture")]
+[node name="TileMapContainer" type="Node2D" parent="." node_paths=PackedStringArray("landLayer", "waterLayer")]
 script = ExtResource("3_f2bbf")
-noiseTexture2D = SubResource("NoiseTexture2D_5pwlf")
-noiseTexture = NodePath("../NoiseTexture")
-noiseFalloffMapTexture = NodePath("../FalloffNoise")
+moistureNoise = SubResource("FastNoiseLite_85xt2")
+temperatureNoise = SubResource("FastNoiseLite_1o2cx")
+altitudeNoise = SubResource("FastNoiseLite_snuk8")
+landLayer = NodePath("Land Layer")
+waterLayer = NodePath("Water Layer")
 
-[node name="World Layer" type="TileMapLayer" parent="TileMapContainer" node_paths=PackedStringArray("SandDisplayLayer", "GrassDisplayLayer")]
-tile_set = SubResource("TileSet_qshoi")
-script = ExtResource("5_jdlsd")
-SandDisplayLayer = NodePath("../Sand Layer")
-GrassDisplayLayer = NodePath("../Grass Layer")
+[node name="Land Layer" type="TileMapLayer" parent="TileMapContainer"]
+y_sort_enabled = true
+tile_set = ExtResource("4_jxoka")
 
-[node name="Sand Layer" type="TileMapLayer" parent="TileMapContainer"]
-position = Vector2(8, 8)
-tile_set = ExtResource("3_5p2r2")
-
-[node name="Grass Layer" type="TileMapLayer" parent="TileMapContainer"]
-position = Vector2(8, 8)
-tile_set = ExtResource("3_5p2r2")
+[node name="Water Layer" type="TileMapLayer" parent="TileMapContainer"]
+z_index = 1
+y_sort_enabled = true
+tile_set = ExtResource("4_jxoka")
 
 [node name="NoiseTexture" type="Sprite2D" parent="."]
 visible = false

@@ -1,103 +1,68 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using Godot.Collections;
 
 public partial class ProceduralGenerator : Node2D
 {
-	[Export] public NoiseTexture2D noiseTexture2D;
-	[Export] public Sprite2D noiseTexture;
-	[Export] public Sprite2D noiseFalloffMapTexture;
-	private TileMapLayer tileMapLayer;
-	private Noise noise;
-	private int width = 256;
-	private int height = 256;
+    [Export] private Noise moistureNoise;
+    [Export] private Noise temperatureNoise;
+    [Export] private Noise altitudeNoise;
+    [Export] private TileMapLayer landLayer;
+    [Export] private TileMapLayer waterLayer;
 	
-	public override void _Ready()
-	{
-		noise = noiseTexture2D.Noise;
-		tileMapLayer = GetNode<TileMapLayer>("World Layer");
-		GenerateWorld();
-		GetNode<DualTileMapLayer>("World Layer").GenerateDisplayLayer();
-	}
+    private Vector2I mapSize = new Vector2I(256, 256);
+    private Vector2I halfMapSize;
+    private Vector2 centrePosition;
+    private float falloffMaxDistance;
+	
+    public override void _Ready()
+    {
+        halfMapSize = mapSize / 2;
+        centrePosition = new Vector2(halfMapSize.X, halfMapSize.Y);
+        falloffMaxDistance = centrePosition.Length() / 1.5f;
+        GenerateWorld();
+    }
 
-	private void GenerateWorld()
-	{
-		/*
-		Image noiseMapImage = Image.CreateEmpty(width, height, false, Image.Format.Rgba8);
-		Image falloffMapImage = Image.CreateEmpty(width, height, false, Image.Format.Rgba8);
-		*/
+    private void GenerateWorld()
+    {
+        Array<Vector2I> cliffCells = new Array<Vector2I>();
 		
-		float[,] noiseMap = new float[width, height];
-		
-		float minValue = float.MaxValue;
-		float maxValue = float.MinValue;
-		
-		for (int x = 0; x < width; x++)
-		{
-			for (int y = 0; y < height; y++)
-			{
-				noiseMap[x, y] = noise.GetNoise2D(x, y);
-				if (noiseMap[x, y] < minValue) minValue = noiseMap[x, y];
-				if (noiseMap[x, y] > maxValue) maxValue = noiseMap[x, y];
-			}
-		}
+        for (int x = 0; x < mapSize.X; x++)
+        {
+            for (int y = 0; y < mapSize.Y; y++)
+            {
+                Vector2I coords = new Vector2I(-halfMapSize.X + x, -halfMapSize.Y + y);
+				
+                float moist = ApplyFalloff(x, y, NormaliseNoise(moistureNoise.GetNoise2D(x, y))) * 10;
+                float temperature = ApplyFalloff(x, y, NormaliseNoise(temperatureNoise.GetNoise2D(x, y))) * 10;
+                float altitude = ApplyFalloff(x, y, NormaliseNoise(altitudeNoise.GetNoise2D(x, y))) * 15;
 
-		float range = maxValue - minValue;
+                Vector2I atlasCoords = new Vector2I(
+                    (altitude < 2) ? 3 : (int) ((moist + 10) / 5),
+                    Mathf.RoundToInt((temperature + 10) / 5)
+                );
+                landLayer.SetCell(coords, 1, atlasCoords);
+				
+                if (atlasCoords.X != 3)
+                {
+                    cliffCells.Add(coords);	
+                }
+            }
+        }
 		
-		for (int x = 0; x < width; x++)
-		{
-			for (int y = 0; y < height; y++)
-			{
-				noiseMap[x, y] = (noiseMap[x, y] - minValue) / Math.Abs(range);
-				/*noiseMapImage.SetPixel(x, y, new Color(noiseMap[x, y], noiseMap[x, y], noiseMap[x, y]));*/
-				noiseMap[x, y] = ApplyFalloff(x, y, noiseMap[x, y]);
-				/*falloffMapImage.SetPixel(x, y, new Color(noiseMap[x, y], noiseMap[x, y], noiseMap[x, y]));*/
-				PlaceTile(x, y, noiseMap[x, y]);
-			}
-		}
-		
-		/*
-		 ImageTexture noiseImgTexture = new ImageTexture();
-		noiseImgTexture.SetImage(noiseMapImage);
-		noiseTexture.SetTexture(noiseImgTexture);
-		
-		ImageTexture falloffNoiseTexture = new ImageTexture();
-		falloffNoiseTexture.SetImage(falloffMapImage);
-		noiseFalloffMapTexture.Texture = falloffNoiseTexture;
-		*/
-	}
+        waterLayer.SetCellsTerrainConnect(cliffCells, 0, 0);
+    }
 
-	private float ApplyFalloff(int x, int y, float noiseValue)
-	{
-		float halfWidth = width / 2f;
-		float halfHeight = height / 2f;
-		
-		Vector2 center = new Vector2(halfWidth, halfHeight);
-		float maxDistance = center.Length() / 1.5f;
-		
-		Vector2 pixelPosition = new Vector2(x, y);
-		float distance = center.DistanceTo(pixelPosition);
-		float alpha = Mathf.Clamp(1 - (distance / maxDistance), 0, 2);
-		
-		return alpha * noiseValue;
-	}
+    private float ApplyFalloff(int x, int y, float noiseValue)
+    { 
+        float distance = centrePosition.DistanceTo(new Vector2(x, y));
+        float alpha = 1f - (distance / falloffMaxDistance);
+        return alpha * noiseValue;
+    }
 
-	private void PlaceTile(int x, int y, float noiseValue)
-	{
-		Vector2I atlasCoord;
-		
-		if (noiseValue < 0.2)
-		{
-			atlasCoord = new Vector2I(3, 0);
-		}
-		else if (noiseValue < 0.3)
-		{
-			atlasCoord = new Vector2I(2, 0);
-		}
-		else
-		{
-			atlasCoord = Vector2I.Zero;
-		}
-		
-		tileMapLayer.SetCell(new Vector2I(x, y), 0, atlasCoord);
-	}
+    private static float NormaliseNoise(float noiseValue)
+    {
+        return Mathf.Clamp((noiseValue + 1f) / 2f, 0f, 1f);
+    }
 }

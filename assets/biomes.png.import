@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cohunak0lcikv"
-path="res://.godot/imported/GrassAtlas.png-6e7b03737cbf708fe929c5e010e1ba9f.ctex"
+uid="uid://bybv1k4fghns5"
+path="res://.godot/imported/biomes.png-1609cdfcdc9d2f15fa2bd6cca0f10aed.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/GrassAtlas.png"
-dest_files=["res://.godot/imported/GrassAtlas.png-6e7b03737cbf708fe929c5e010e1ba9f.ctex"]
+source_file="res://assets/biomes.png"
+dest_files=["res://.godot/imported/biomes.png-1609cdfcdc9d2f15fa2bd6cca0f10aed.ctex"]
 
 [params]
 

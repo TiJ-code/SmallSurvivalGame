@@ -11,18 +11,17 @@ config_version=5
 [application]
 
 config/name="SmallSurvivalGame"
-config/version="0.0.007"
+config/version="0.0.008"
 run/main_scene="res://game.tscn"
 config/features=PackedStringArray("4.3", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=1280
-window/size/viewport_height=720
-window/size/initial_position_type=2
+window/size/viewport_width=480
+window/size/viewport_height=270
 window/size/initial_screen=1
-window/stretch/aspect="ignore"
+window/stretch/mode="viewport"
 
 [dotnet]
 

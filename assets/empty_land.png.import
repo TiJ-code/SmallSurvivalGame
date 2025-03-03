@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://0qiglyk3w57r"
-path="res://.godot/imported/TilemapPlaceholders.png-a4f324a56b0f8a745e38008638a62903.ctex"
+uid="uid://bt8rtvrv67ofw"
+path="res://.godot/imported/empty_land.png-1421fbaea54768a423080ddf2af72697.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/TilemapPlaceholders.png"
-dest_files=["res://.godot/imported/TilemapPlaceholders.png-a4f324a56b0f8a745e38008638a62903.ctex"]
+source_file="res://assets/empty_land.png"
+dest_files=["res://.godot/imported/empty_land.png-1421fbaea54768a423080ddf2af72697.ctex"]
 
 [params]
 
