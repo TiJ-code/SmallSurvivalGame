@@ -16,12 +16,18 @@ public partial class ProceduralGenerator : Node2D
 	
     public override void _Ready()
     {
+        RandomNumberGenerator randomNumberGenerator = new RandomNumberGenerator();
+
+        // moistureNoise.Set("seed", randomNumberGenerator.Randi());
+        // temperatureNoise.Set("seed", randomNumberGenerator.Randi());
+        // altitudeNoise.Set("seed", randomNumberGenerator.Randi());
+        
         halfMapSize = mapSize / 2;
         centrePosition = new Vector2(halfMapSize.X, halfMapSize.Y);
         falloffMaxDistance = centrePosition.Length() / 1.5f;
         GenerateWorld();
     }
-
+    
     private void GenerateWorld()
     {
         Array<Vector2I> cliffCells = new Array<Vector2I>();

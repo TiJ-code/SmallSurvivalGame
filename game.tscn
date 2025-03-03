@@ -1,12 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cic2hemd11sca"]
+[gd_scene load_steps=7 format=3 uid="uid://cic2hemd11sca"]
 
-[ext_resource type="Script" path="res://scripts/player/PlayerMovement.cs" id="3_3xh32"]
-[ext_resource type="Script" path="res://scripts/map/ProceduralGenerator.cs" id="3_f2bbf"]
-[ext_resource type="Texture2D" uid="uid://cvxfvu4mwljui" path="res://assets/Player.png" id="3_rrraj"]
+[ext_resource type="PackedScene" uid="uid://d4iukkgonl57b" path="res://player.tscn" id="1_feb5d"]
+[ext_resource type="Script" uid="uid://cakbrum0qmika" path="res://scripts/map/ProceduralGenerator.cs" id="3_f2bbf"]
 [ext_resource type="TileSet" uid="uid://dg35khjl1foae" path="res://assets/ResourceAtlas.tres" id="4_jxoka"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bu370"]
-size = Vector2(6, 8)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_85xt2"]
 seed = -686559431
@@ -20,21 +16,6 @@ seed = 778520878
 
 [node name="main" type="Node2D"]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-script = ExtResource("3_3xh32")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-position = Vector2(0, 2)
-shape = SubResource("RectangleShape2D_bu370")
-
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
-z_index = 3
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_rrraj")
-
-[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
-limit_smoothed = true
-
 [node name="TileMapContainer" type="Node2D" parent="." node_paths=PackedStringArray("landLayer", "waterLayer")]
 script = ExtResource("3_f2bbf")
 moistureNoise = SubResource("FastNoiseLite_85xt2")
@@ -44,12 +25,12 @@ landLayer = NodePath("Land Layer")
 waterLayer = NodePath("Water Layer")
 
 [node name="Land Layer" type="TileMapLayer" parent="TileMapContainer"]
-y_sort_enabled = true
+z_index = -1
+texture_filter = 1
 tile_set = ExtResource("4_jxoka")
 
 [node name="Water Layer" type="TileMapLayer" parent="TileMapContainer"]
-z_index = 1
-y_sort_enabled = true
+texture_filter = 1
 tile_set = ExtResource("4_jxoka")
 
 [node name="NoiseTexture" type="Sprite2D" parent="."]
@@ -58,3 +39,6 @@ visible = false
 [node name="FalloffNoise" type="Sprite2D" parent="."]
 visible = false
 position = Vector2(300, 0)
+
+[node name="player" parent="." instance=ExtResource("1_feb5d")]
+z_index = 1
