@@ -1,6 +1,4 @@
 using Godot;
-using System;
-using System.Collections.Generic;
 using Godot.Collections;
 
 public partial class ProceduralGenerator : Node2D
@@ -11,7 +9,7 @@ public partial class ProceduralGenerator : Node2D
     [Export] private TileMapLayer landLayer;
     [Export] private TileMapLayer waterLayer;
 	
-    private Vector2I mapSize = new Vector2I(256, 256);
+    private readonly Vector2I mapSize = new Vector2I(256, 256);
     private Vector2I halfMapSize;
     private Vector2 centrePosition;
     private float falloffMaxDistance;

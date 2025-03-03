@@ -6,6 +6,7 @@
 [ext_resource type="TileSet" uid="uid://dg35khjl1foae" path="res://assets/ResourceAtlas.tres" id="4_jxoka"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bu370"]
+size = Vector2(6, 8)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_85xt2"]
 seed = -686559431
@@ -23,6 +24,7 @@ seed = 778520878
 script = ExtResource("3_3xh32")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_bu370")
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
@@ -31,6 +33,7 @@ scale = Vector2(0.25, 0.25)
 texture = ExtResource("3_rrraj")
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+limit_smoothed = true
 
 [node name="TileMapContainer" type="Node2D" parent="." node_paths=PackedStringArray("landLayer", "waterLayer")]
 script = ExtResource("3_f2bbf")
